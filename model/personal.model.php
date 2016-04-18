@@ -8,7 +8,7 @@ class PersonalModel
   function __construct()
   {
     try {
-        $this->pdo =  new PDO('mysql:host=localhost;dbname=bicdev5_mitest', 'bicdev5_webtest', 'Webtest2016', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+        $this->pdo =  new PDO('mysql:host=localhost;dbname=personal', 'root', 'mypass', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
         //$this->pdo->exec("SET CHARACTER SET utf8");
         $this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -202,19 +202,6 @@ class PersonalModel
     try {
       $stm = $this->pdo->prepare('SELECT* FROM PERSONAL p INNER JOIN PUESTOS pu ON p.id_puesto = pu.id_puesto where pu.sueldo_puesto=?');
       $stm->execute(array($sueldo));
-/*
-      foreach ($stm->fetchAll(PDO::FETCH_OBJ) as $key) {
-        $per = new Personal();
-
-        $per->__SET('id', $key->id_personal);
-        $per->__SET('nombre', $key->nombre_personal);
-        $per->__SET('apellidos', $key->apellidos_personal);
-        $per->__SET('direccion', $key->direccion_personal);
-        $per->__SET('nit', $key->nit_personal);
-        $per->__SET('fechaNacimiento', $key->fecha_nacimiento);
-        $per->__SET('idPuesto', $key->id_puesto);
-        $result[] = $per;
-    }*///fin del foreach
         return $stm->fetchAll(PDO::FETCH_OBJ);
     } catch (Exception $e) {
       die($e->getMessage());
